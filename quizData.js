@@ -1,7 +1,7 @@
 // quizdata.js (non-module, langsung nempel ke window)
 
 (function () {
-  const quizBank = [
+  window.quizBank = [
   {
     id: 1,
     question: "Magnet memiliki dua kutub, yaitu …",
