@@ -1,6 +1,6 @@
 // quizdata.js (non-module, langsung nempel ke window)
 
-(function () {
+{
   window.quizBank = [
   {
     id: 1,
@@ -135,3 +135,4 @@
   window.addQuiz = addQuiz;
   window.dispatchEvent(new Event("quizdata:ready"));
 })();
+
