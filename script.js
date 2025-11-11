@@ -1,24 +1,30 @@
+// ===============================
+// script.js (versi lengkap terbaru)
+// ===============================
+
+"use strict";
+
 let currentScreen = "menuAwal";
 let numPlayers = 2; // minimal 2
 let currentPlayer = 1;
 let positions = {};
 let playerNames = {};
-let boardSize = 64; // 8x8
+const boardSize = 64; // 8x8
 let playerAvatars = {};
-let quizOrder = [];  // urutan soal acak
-let quizPtr = 0;     // penanda index soal yang sedang ditampilkan
+let quizOrder = [];   // urutan index soal diacak
+let quizPtr = 0;      // penanda index urutan
+let awaitingAnswer = false; // lock agar tidak roll dadu saat soal aktif
 
+// DEBUG: pantau status quizBank (untuk GitHub Pages)
 console.log("[DEBUG] window.quizBank ada?", Array.isArray(window.quizBank), window.quizBank?.length);
 window.addEventListener("quizdata:ready", () => {
   console.log("[DEBUG] quizdata:ready diterima. Jumlah soal:", window.quizBank?.length);
 });
 
-
-
-// === NEW: Stat per pemain ===
+// === Statistik per pemain ===
 let playerStats = {}; // { [idx]: {correct:0, wrong:0, points:0} }
 
-// ====== ATURAN ULAR & TANGGA ======
+// === Ular & Tangga ===
 const jumps = {
   // Tangga (naik)
   5: 11,
@@ -32,7 +38,7 @@ const jumps = {
   59: 45
 };
 
-// ====== DICE ICON MAP (1–6) ======
+// === Icon Dadu 1–6 ===
 const DICE_ICONS = {
   1: "assets/d1.png",
   2: "assets/d2.png",
@@ -42,7 +48,11 @@ const DICE_ICONS = {
   6: "assets/d6.png",
 };
 
-// ====== AUDIO HELPERS ======
+// === Konfigurasi bonus gerak setelah kuis ===
+const CORRECT_BONUS = 1;   // maju 1 kotak bila benar
+const WRONG_PENALTY = 1;   // mundur 1 kotak bila salah
+
+// === AUDIO helpers ===
 function playSfxById(id, volume = 1) {
   const el = document.getElementById(id);
   if (!el) return;
@@ -61,6 +71,7 @@ function startBgm(vol = 0.6) {
   } catch (_) {}
 }
 
+// === Tunggu quizBank siap (untuk GitHub Pages) ===
 function onQuizReadyOnce(cb) {
   if (Array.isArray(window.quizBank) && window.quizBank.length) {
     cb();
@@ -72,7 +83,7 @@ function onQuizReadyOnce(cb) {
   };
   window.addEventListener("quizdata:ready", handler);
 
-  // fallback: polling max 3 detik
+  // fallback polling max 3 detik
   let waited = 0;
   const t = setInterval(() => {
     if (Array.isArray(window.quizBank) && window.quizBank.length) {
@@ -86,16 +97,15 @@ function onQuizReadyOnce(cb) {
   }, 100);
 }
 
-
-// ====== DICE ENABLE HELPER ======
+// === Helper: enable/disable tombol dadu ===
 function setDiceEnabled(on) {
   const btn = document.getElementById("rollDiceBtn");
   if (!btn) return;
   btn.disabled = !on;
-  btn.classList.toggle("disabled", !on); // untuk styling disabled di CSS (opsional)
+  btn.classList.toggle("disabled", !on);
 }
 
-// ====== NAVIGASI ======
+// === Navigasi layar ===
 function showScreen(id) {
   document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
   document.getElementById(id).classList.add("active");
@@ -107,7 +117,7 @@ function goBack(button) {
   if (prevId) showScreen(prevId);
 }
 
-// Mulai musik saat user pertama kali klik "Play"
+// Mulai musik saat klik "Play"
 document.getElementById("playBtn")?.addEventListener("click", () => {
   startBgm(0.6);
   showScreen("menuMode");
@@ -121,7 +131,7 @@ function selectOpponent(_) {
   generatePlayerInputs(numPlayers);
 }
 
-// ====== INPUT DINAMIS NAMA ======
+// === Input dinamis nama pemain ===
 function generatePlayerInputs(count) {
   const container = document.getElementById("playerInputs");
   container.innerHTML = "";
@@ -145,12 +155,11 @@ document.getElementById("playerCount")?.addEventListener("input", function () {
   generatePlayerInputs(numPlayers);
 });
 
-// ====== MULAI GAME ======
-// ====== MULAI GAME (DROP-IN REPLACE) ======
+// === Mulai Game ===
 function startGame() {
   startBgm(0.6);
 
-  // === VALIDASI NAMA PEMAIN (WAJIB TERISI) ===
+  // Validasi nama
   const countInput = document.getElementById("playerCount");
   numPlayers = Math.max(2, Math.min(4, parseInt(countInput?.value || "2", 10)));
 
@@ -163,38 +172,29 @@ function startGame() {
     }
   }
 
-  // === RESET STATE PERMAINAN ===
+  // Reset state
   positions = {};
   playerNames = {};
   playerAvatars = {};
-
-  const defaultAvatars = [
-    "assets/p1.png",
-    "assets/p2.png",
-    "assets/p3.png",
-    "assets/p4.png"
-  ];
-
+  const defaultAvatars = ["assets/p1.png", "assets/p2.png", "assets/p3.png", "assets/p4.png"];
   for (let i = 1; i <= numPlayers; i++) {
-    playerNames[i] = document.getElementById(`player${i}`)?.value || `Pemain ${i}`;
-    positions[i]   = 1; // mulai di kotak 1
+    playerNames[i]   = document.getElementById(`player${i}`)?.value || `Pemain ${i}`;
+    positions[i]     = 1;
     playerAvatars[i] = defaultAvatars[(i - 1) % defaultAvatars.length];
   }
-
-  // === (opsional) reset statistik kalau kamu memakainya ===
-  if (typeof playerStats !== "undefined") {
-    playerStats = {};
-    for (let i = 1; i <= numPlayers; i++) {
-      playerStats[i] = { correct: 0, wrong: 0, points: 0 };
-    }
+  playerStats = {};
+  for (let i = 1; i <= numPlayers; i++) {
+    playerStats[i] = { correct: 0, wrong: 0, points: 0 };
   }
 
   currentPlayer = 1;
+  awaitingAnswer = false;
   showScreen("gameBoard");
   renderBoard();
   ensureTokens();
   renderPlayers();
   updateTurnInfo();
+  setDiceEnabled(true);
 
   // Reset tampilan dadu
   const diceText = document.getElementById("diceResult");
@@ -202,18 +202,14 @@ function startGame() {
   const diceIcon = document.getElementById("diceIcon");
   if (diceIcon) { diceIcon.src = DICE_ICONS[1] || ""; diceIcon.alt = "Hasil Dadu"; }
 
-  setupBgmControls(); // kontrol musik
+  setupBgmControls();
 
-  // ====== INI BAGIAN PENTING LANGKAH #3 ======
-  // Log untuk memastikan quizBank sudah terisi di GitHub Pages
+  // Siapkan urutan soal
   console.log("[START] quizBank:", Array.isArray(window.quizBank) ? window.quizBank.length : "undefined");
-
-  // Siapkan urutan soal acak:
   if (Array.isArray(window.quizBank) && window.quizBank.length) {
     quizOrder = shuffle([...Array(window.quizBank.length).keys()]);
     quizPtr = 0;
   } else {
-    // Kalau quizData.js belum siap saat startGame, tunggu event lalu set urutan
     onQuizReadyOnce(() => {
       if (Array.isArray(window.quizBank) && window.quizBank.length) {
         quizOrder = shuffle([...Array(window.quizBank.length).keys()]);
@@ -226,8 +222,7 @@ function startGame() {
   }
 }
 
-
-// ====== RENDER PAPAN ======
+// === Render papan 8x8, zigzag ===
 function renderBoard() {
   const board = document.getElementById("board");
   board.innerHTML = "";
@@ -235,19 +230,19 @@ function renderBoard() {
 
   for (let row = size - 1; row >= 0; row--) {
     for (let col = 0; col < size; col++) {
-      const actualCol = (row % 2 === 0) ? col : size - 1 - col; // zigzag
+      const actualCol = (row % 2 === 0) ? col : size - 1 - col;
       const cellNumber = row * size + actualCol + 1;
 
       const cell = document.createElement("div");
       cell.classList.add("cell");
       cell.id = `cell-${cellNumber}`;
-      cell.innerText = cellNumber; // kalau tidak mau angka: kosongkan
+      cell.innerText = cellNumber; // atur ke "" kalau tidak ingin angka
       board.appendChild(cell);
     }
   }
 }
 
-// ====== TOKEN (PION GAMBAR) ======
+// === Token (pion) ===
 function ensureTokens() {
   const board = document.getElementById("board");
   for (let i = 1; i <= numPlayers; i++) {
@@ -278,10 +273,10 @@ function getCellXY(pos, offsetIndex = 0) {
   const centerX = c.left - b.left + c.width / 2;
   const centerY = c.top  - b.top  + c.height / 2;
 
-  let x = centerX - 20; // setengah pion ~20px
+  let x = centerX - 20; // kira2 setengah ukuran pion
   let y = centerY - 20;
 
-  // offset kecil biar tidak tumpuk (grid 2x2)
+  // offset kecil agar pion tidak tumpuk (grid 2x2)
   const COL = offsetIndex % 2;
   const ROW = Math.floor(offsetIndex / 2);
   x += (COL * 18) - 9;
@@ -293,11 +288,11 @@ function animateMoveTo(i, pos, callback) {
   ensureTokens();
   const wrap = document.querySelector(`.token-wrap[data-player="${i}"]`);
   const img  = wrap?.querySelector(".token-img");
-  if (!wrap || !img) return callback && callback();
+  if (!wrap || !img) { if (callback) callback(); return; }
 
   const { x, y } = getCellXY(pos, i - 1);
 
-  // trigger anim loncat
+  // anim lompat
   img.classList.remove("token-jump");
   void img.offsetWidth; // reflow
   img.classList.add("token-jump");
@@ -319,7 +314,7 @@ function renderPlayers() {
   }
 }
 
-// ====== ULAR/TANGGA ======
+// === Ular/Tangga ===
 function applyJump(pos) {
   if (jumps[pos] !== undefined) {
     const to = jumps[pos];
@@ -331,9 +326,11 @@ function applyJump(pos) {
   return pos;
 }
 
-// ====== DADU ======
+// === Tombol dadu ===
 document.getElementById("rollDiceBtn")?.addEventListener("click", () => {
-  // Jangan jalan kalau tombol disabled
+  // lock: jangan boleh roll kalau soal belum dijawab
+  if (awaitingAnswer) return;
+
   const rollBtn = document.getElementById("rollDiceBtn");
   if (rollBtn?.disabled) return;
 
@@ -353,6 +350,7 @@ document.getElementById("rollDiceBtn")?.addEventListener("click", () => {
     diceIcon.classList.add("spin");
   }
 
+  // Gerak sesuai dadu
   let landed = positions[currentPlayer] + dice;
   if (landed > boardSize) landed = boardSize;
   positions[currentPlayer] = landed;
@@ -371,26 +369,24 @@ document.getElementById("rollDiceBtn")?.addEventListener("click", () => {
 
   function afterAllMoves() {
     if (positions[currentPlayer] >= boardSize) {
-      setTimeout(() => {
-        // Game selesai → tampilkan rekap hasil
-        showResults();
-      }, 120);
+      setTimeout(() => showResults(), 120);
       return;
     }
-    // Kunci dadu sampai soal dijawab
+    // Kunci dadu & tampilkan kuis
     setDiceEnabled(false);
-    showQuiz(); // kuis muncul setelah pion selesai bergerak
+    awaitingAnswer = true;
+    showQuiz();
   }
 });
 
-// ====== UTIL QUIZ ======
+// === UTIL QUIZ ===
 const LABELS = ["A", "B", "C", "D", "E", "F"];
 function ensureLabeledOptions(options) {
   if (!Array.isArray(options)) return [];
   const already = options.every(o => /^[A-F]\s*[\.\)\-]\s*/i.test(String(o).trim()));
   return already ? options.slice() : options.map((o, i) => `${LABELS[i] || ""}. ${o}`);
 }
-// acak array (Fisher–Yates)
+// acak (Fisher–Yates)
 function shuffle(arr) {
   const a = [...arr];
   for (let i = a.length - 1; i > 0; i--) {
@@ -403,7 +399,7 @@ function norm(s) {
   return String(s || "").trim().replace(/^[A-F]\s*[\.\)\-]\s*/i, "").toLowerCase();
 }
 
-// ====== KUIS ======
+// === KUIS ===
 let _currentQuiz = null;
 
 function showQuiz() {
@@ -412,11 +408,9 @@ function showQuiz() {
     return;
   }
 
-  console.log("Jumlah soal terdeteksi:", window.quizBank.length); // debug di Pages
+  console.log("Jumlah soal terdeteksi:", window.quizBank.length);
 
-
-
-  // ambil soal berdasarkan urutan acak (soal diacak, opsi TIDAK)
+  // Ambil soal berdasarkan urutan acak (soal diacak, opsi TIDAK)
   if (!Array.isArray(quizOrder) || quizOrder.length === 0 || quizPtr >= quizOrder.length) {
     quizOrder = shuffle([...Array(window.quizBank.length).keys()]);
     quizPtr = 0;
@@ -424,7 +418,6 @@ function showQuiz() {
   const qIndex = quizOrder[quizPtr++];
   const q = window.quizBank[qIndex];
 
-  // urutan A/B/C/D tetap — tidak diacak
   const labeledOptions = ensureLabeledOptions(q.options || []);
   const answerLabeled  = ensureLabeledOptions([q.answer || ""])[0];
 
@@ -438,6 +431,9 @@ function showQuiz() {
   const qEl = document.getElementById("quizQuestion");
   const optionsContainer = document.getElementById("quizOptions");
   if (!box || !qEl || !optionsContainer) {
+    // kalau kontainer tidak ada, langsung lanjut turn (supaya tidak deadlock)
+    awaitingAnswer = false;
+    setDiceEnabled(true);
     nextTurn();
     return;
   }
@@ -450,16 +446,57 @@ function showQuiz() {
     btn.className = "quiz-option";
     btn.textContent = opt;
 
-    // === Catat benar/salah + poin (tanpa popup)
     btn.onclick = () => {
       const isCorrect = norm(opt) === norm(_currentQuiz.answer);
+
+      // Catat statistik
       if (isCorrect) {
         playerStats[currentPlayer].correct += 1;
         playerStats[currentPlayer].points  += 10;
       } else {
         playerStats[currentPlayer].wrong   += 1;
       }
-      nextTurn();
+
+      // Bonus gerak: benar maju, salah mundur
+      const delta = isCorrect ? CORRECT_BONUS : -WRONG_PENALTY;
+      let newPos = positions[currentPlayer] + delta;
+
+      // Batas papan
+      if (newPos < 1) newPos = 1;
+      if (newPos > boardSize) newPos = boardSize;
+
+      // Animasi bonus move
+      animateMoveTo(currentPlayer, newPos, () => {
+        positions[currentPlayer] = newPos;
+
+        // Terapkan ular/tangga setelah bonus move
+        const jumpTo = jumps[newPos];
+        if (jumpTo !== undefined) {
+          positions[currentPlayer] = jumpTo;
+          setTimeout(() => {
+            animateMoveTo(currentPlayer, jumpTo, afterBonusAllMoves);
+          }, 180);
+        } else {
+          afterBonusAllMoves();
+        }
+      });
+
+      function afterBonusAllMoves() {
+        // Selesai menjawab → buka kunci dadu
+        document.getElementById("quizBox")?.classList.add("hidden");
+        _currentQuiz = null;
+        awaitingAnswer = false;
+        setDiceEnabled(true);
+
+        // Cek menang (setelah bonus move)
+        if (positions[currentPlayer] >= boardSize) {
+          setTimeout(() => showResults(), 120);
+          return;
+        }
+
+        // Lanjut ke pemain berikutnya
+        nextTurn();
+      }
     };
 
     optionsContainer.appendChild(btn);
@@ -468,29 +505,23 @@ function showQuiz() {
   box.classList.remove("hidden");
 }
 
-// ====== GILIRAN ======
+// === GILIRAN ===
 function nextTurn() {
-  document.getElementById("quizBox")?.classList.add("hidden");
-  _currentQuiz = null;
-
-  // Setelah menjawab soal → aktifkan dadu lagi
-  setDiceEnabled(true);
-
   currentPlayer++;
   if (currentPlayer > numPlayers) currentPlayer = 1;
   updateTurnInfo();
 }
 function updateTurnInfo() {
-  document.getElementById("turnInfo").innerText = `Giliran: ${playerNames[currentPlayer]}`;
+  const el = document.getElementById("turnInfo");
+  if (el) el.innerText = `Giliran: ${playerNames[currentPlayer]}`;
 }
 
-// ====== HASIL ======
+// === HASIL ===
 function showResults() {
   const table = document.getElementById("resultTable");
   const tbody = table?.querySelector("tbody");
 
   if (table && tbody) {
-    // isi tabel
     tbody.innerHTML = "";
     for (let i = 1; i <= numPlayers; i++) {
       const tr = document.createElement("tr");
@@ -512,7 +543,7 @@ function showResults() {
     }
     showScreen("resultScreen");
   } else {
-    // fallback kalau belum ada layar hasil di HTML
+    // fallback alert
     let msg = "Hasil Permainan:\n\n";
     for (let i = 1; i <= numPlayers; i++) {
       const c = playerStats[i]?.correct ?? 0;
@@ -525,7 +556,7 @@ function showResults() {
   }
 }
 
-// ====== KONTROL BGM (pojok kanan atas, pakai IKON) ======
+// === Kontrol musik (ikon) ===
 function setupBgmControls() {
   const bgm = document.getElementById("bgm");
   const toggle = document.getElementById("bgmToggle");
@@ -545,7 +576,6 @@ function setupBgmControls() {
     }
   };
 
-  // set label/ikon awal
   setIcon();
 
   toggle.addEventListener("click", () => {
@@ -562,12 +592,11 @@ function setupBgmControls() {
     bgm.volume = isNaN(v) ? 0.6 : v;
   });
 
-  // jaga sinkron saat state audio berubah dari luar
   bgm.addEventListener("play", setIcon);
   bgm.addEventListener("pause", setIcon);
 }
 
-// ====== EKSPOR FUNGSI GLOBAL YANG DIPAKAI DI HTML ======
+// === Ekspor ke global (dipakai di HTML) ===
 window.selectMode = selectMode;
 window.selectOpponent = selectOpponent;
 window.startGame = startGame;
