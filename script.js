@@ -8,6 +8,13 @@ let playerAvatars = {};
 let quizOrder = [];  // urutan soal acak
 let quizPtr = 0;     // penanda index soal yang sedang ditampilkan
 
+console.log("[DEBUG] window.quizBank ada?", Array.isArray(window.quizBank), window.quizBank?.length);
+window.addEventListener("quizdata:ready", () => {
+  console.log("[DEBUG] quizdata:ready diterima. Jumlah soal:", window.quizBank?.length);
+});
+
+
+
 // === NEW: Stat per pemain ===
 let playerStats = {}; // { [idx]: {correct:0, wrong:0, points:0} }
 
