@@ -245,22 +245,22 @@
   </script>
 
   <!-- Muat data kuis (NON-MODULE) sebelum logic game -->
- <!-- 1) Siapkan global agar tidak undefined -->
+<!-- Siapkan global agar tidak undefined -->
 <script>
   window.quizBank = window.quizBank || [];
 </script>
 
-<!-- 2) Muat data kuis LEBIH DULU -->
-<script src="./quizData.js?v=4" defer
-        onerror="alert('quizData.js gagal dimuat. Cek huruf besar-kecil & path file!');"></script>
+<!-- MUAT DATA KUIS LEBIH DULU -->
+<script src="./quizData.js?v=5" defer
+        onerror="alert('quizData.js gagal dimuat. Cek nama file & path-nya!');"></script>
 
-<!-- 3) (Opsional) file lain, tetap sebelum script.js -->
-<script src="./diceData.js?v=4" defer></script>
-<script src="./BoardPlayer.js?v=4" defer></script>
-<script src="./Game.js?v=4" defer></script>
+<!-- (Opsional) file lain -->
+<script src="./diceData.js?v=5" defer></script>
+<script src="./BoardPlayer.js?v=5" defer></script>
+<script src="./Game.js?v=5" defer></script>
 
-<!-- 4) TERAKHIR: logika utama yang memerlukan quizBank -->
-<script src="./script.js?v=4" defer></script>
+<!-- TERAKHIR: logika utama -->
+<script src="./script.js?v=5" defer></script>
 
 </body>
 </html>
