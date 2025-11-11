@@ -133,4 +133,5 @@
   window.getRandomQuiz = getRandomQuiz;
   window.getRandomQuizzes = getRandomQuizzes;
   window.addQuiz = addQuiz;
+  window.dispatchEvent(new Event("quizdata:ready"));
 })();
