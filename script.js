@@ -54,6 +54,32 @@ function startBgm(vol = 0.6) {
   } catch (_) {}
 }
 
+function onQuizReadyOnce(cb) {
+  if (Array.isArray(window.quizBank) && window.quizBank.length) {
+    cb();
+    return;
+  }
+  const handler = () => {
+    window.removeEventListener("quizdata:ready", handler);
+    cb();
+  };
+  window.addEventListener("quizdata:ready", handler);
+
+  // fallback: polling max 3 detik
+  let waited = 0;
+  const t = setInterval(() => {
+    if (Array.isArray(window.quizBank) && window.quizBank.length) {
+      clearInterval(t);
+      cb();
+    } else if ((waited += 100) >= 3000) {
+      clearInterval(t);
+      console.warn("quizBank belum terisi setelah 3s. Cek path/case quizData.js.");
+      alert("Data soal belum termuat. Cek nama file 'quizData.js' (huruf besar-kecil) dan urutan <script> di index.html.");
+    }
+  }, 100);
+}
+
+
 // ====== DICE ENABLE HELPER ======
 function setDiceEnabled(on) {
   const btn = document.getElementById("rollDiceBtn");
@@ -113,6 +139,7 @@ document.getElementById("playerCount")?.addEventListener("input", function () {
 });
 
 // ====== MULAI GAME ======
+// ====== MULAI GAME (DROP-IN REPLACE) ======
 function startGame() {
   startBgm(0.6);
 
@@ -129,6 +156,7 @@ function startGame() {
     }
   }
 
+  // === RESET STATE PERMAINAN ===
   positions = {};
   playerNames = {};
   playerAvatars = {};
@@ -142,14 +170,16 @@ function startGame() {
 
   for (let i = 1; i <= numPlayers; i++) {
     playerNames[i] = document.getElementById(`player${i}`)?.value || `Pemain ${i}`;
-    positions[i] = 1; // mulai di kotak 1
+    positions[i]   = 1; // mulai di kotak 1
     playerAvatars[i] = defaultAvatars[(i - 1) % defaultAvatars.length];
   }
 
-  // === reset statistik
-  playerStats = {};
-  for (let i = 1; i <= numPlayers; i++) {
-    playerStats[i] = { correct: 0, wrong: 0, points: 0 };
+  // === (opsional) reset statistik kalau kamu memakainya ===
+  if (typeof playerStats !== "undefined") {
+    playerStats = {};
+    for (let i = 1; i <= numPlayers; i++) {
+      playerStats[i] = { correct: 0, wrong: 0, points: 0 };
+    }
   }
 
   currentPlayer = 1;
@@ -165,17 +195,30 @@ function startGame() {
   const diceIcon = document.getElementById("diceIcon");
   if (diceIcon) { diceIcon.src = DICE_ICONS[1] || ""; diceIcon.alt = "Hasil Dadu"; }
 
-  setupBgmControls(); // hubungkan tombol & slider pojok kanan atas
+  setupBgmControls(); // kontrol musik
 
-  // set urutan soal acak (soal, bukan opsi)
+  // ====== INI BAGIAN PENTING LANGKAH #3 ======
+  // Log untuk memastikan quizBank sudah terisi di GitHub Pages
+  console.log("[START] quizBank:", Array.isArray(window.quizBank) ? window.quizBank.length : "undefined");
+
+  // Siapkan urutan soal acak:
   if (Array.isArray(window.quizBank) && window.quizBank.length) {
     quizOrder = shuffle([...Array(window.quizBank.length).keys()]);
     quizPtr = 0;
+  } else {
+    // Kalau quizData.js belum siap saat startGame, tunggu event lalu set urutan
+    onQuizReadyOnce(() => {
+      if (Array.isArray(window.quizBank) && window.quizBank.length) {
+        quizOrder = shuffle([...Array(window.quizBank.length).keys()]);
+        quizPtr = 0;
+        console.log("[READY AFTER START] quizBank:", window.quizBank.length);
+      } else {
+        console.warn("quizBank masih kosong setelah event ready — cek path/nama quizData.js!");
+      }
+    });
   }
-
-  // dadu aktif saat baru mulai (belum ada soal terbuka)
-  setDiceEnabled(true);
 }
+
 
 // ====== RENDER PAPAN ======
 function renderBoard() {
@@ -358,10 +401,13 @@ let _currentQuiz = null;
 
 function showQuiz() {
   if (!Array.isArray(window.quizBank) || window.quizBank.length === 0) {
-    console.warn("quizBank kosong/undefined. Cek pemanggilan quizData.js (case & path).");
-    alert("Data soal belum termuat. Cek nama file 'quizData.js' (huruf besar-kecil) dan urutan <script> di index.html.");
+    onQuizReadyOnce(() => showQuiz());
     return;
   }
+
+  console.log("Jumlah soal terdeteksi:", window.quizBank.length); // debug di Pages
+
+
 
   // ambil soal berdasarkan urutan acak (soal diacak, opsi TIDAK)
   if (!Array.isArray(quizOrder) || quizOrder.length === 0 || quizPtr >= quizOrder.length) {
