@@ -1,6 +1,6 @@
 // quizdata.js (non-module, langsung nempel ke window)
 
-{
+(function () {
   window.quizBank = [
   {
     id: 1,
@@ -131,4 +131,4 @@
   // expose ke window (GLOBAL)
   
   window.dispatchEvent(new Event("quizdata:ready"));
-}();
+})();
