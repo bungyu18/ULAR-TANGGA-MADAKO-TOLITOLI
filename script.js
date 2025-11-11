@@ -358,7 +358,8 @@ let _currentQuiz = null;
 
 function showQuiz() {
   if (!Array.isArray(window.quizBank) || window.quizBank.length === 0) {
-    nextTurn();
+    console.warn("quizBank kosong/undefined. Cek pemanggilan quizData.js (case & path).");
+    alert("Data soal belum termuat. Cek nama file 'quizData.js' (huruf besar-kecil) dan urutan <script> di index.html.");
     return;
   }
 
