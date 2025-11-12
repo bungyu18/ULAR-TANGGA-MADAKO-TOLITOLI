@@ -17,9 +17,9 @@
       padding: 0 20px; box-sizing: border-box;
       z-index: 9;
     }
-    .nav-buttons button { background: transparent; border: none; cursor: pointer; transition: transform .2s; }
-    .nav-buttons img { width: 48px; height: 48px; }
-    .nav-buttons button:hover { transform: scale(1.1); }
+    .nav-buttons button{ background:transparent; border:none; cursor:pointer; transition:transform .2s; }
+    .nav-buttons img{ width:48px; height:48px; }
+    .nav-buttons button:hover{ transform:scale(1.1); }
 
     /* Kontrol musik pojok kanan atas */
     .music-controls{
@@ -49,7 +49,7 @@
   <!-- ===== Menu Awal ===== -->
   <div id="menuAwal" class="screen active" data-next="menuMode">
     <img src="assets/logo.png" alt="Logo Game" class="logo" />
-    <button id="playBtn" class="play-btn" aria-label="Mulai">
+    <button id="playBtn" class="play-btn" type="button" aria-label="Mulai">
       <img src="assets/play.png" class="play-button" alt="Tombol Mulai" />
     </button>
   </div>
@@ -57,7 +57,9 @@
   <!-- ===== Menu Pilih Mode ===== -->
   <div id="menuMode" class="screen" data-prev="menuAwal" data-next="menuLawan">
     <div class="nav-buttons">
-      <button onclick="goBack(this)" aria-label="Kembali"><img src="assets/back.png" alt="Kembali" /></button>
+      <button type="button" onclick="goBack(this)" aria-label="Kembali">
+        <img src="assets/back.png" alt="Kembali" />
+      </button>
     </div>
 
     <h2>
@@ -65,10 +67,10 @@
     </h2>
 
     <div class="mode-buttons">
-      <button class="mode-btn" onclick="selectMode('single')" aria-label="Mode Single Player">
+      <button class="mode-btn" type="button" onclick="selectMode('single')" aria-label="Mode Single Player">
         <img src="assets/single.png" alt="Single Player"/>
       </button>
-      <button class="mode-btn" onclick="selectMode('multi')" aria-label="Mode Multiplayer">
+      <button class="mode-btn" type="button" onclick="selectMode('multi')" aria-label="Mode Multiplayer">
         <img src="assets/multi.png" alt="Multiplayer"/>
       </button>
     </div>
@@ -77,7 +79,9 @@
   <!-- ===== Menu Pilih Lawan ===== -->
   <div id="menuLawan" class="screen" data-prev="menuMode" data-next="menuPemain">
     <div class="nav-buttons">
-      <button onclick="goBack(this)" aria-label="Kembali"><img src="assets/back.png" alt="Kembali" /></button>
+      <button type="button" onclick="goBack(this)" aria-label="Kembali">
+        <img src="assets/back.png" alt="Kembali" />
+      </button>
     </div>
 
     <h2>
@@ -85,10 +89,10 @@
     </h2>
 
     <div class="lawan-buttons">
-      <button class="lawan-btn" onclick="selectOpponent('komputer')" aria-label="Lawan Komputer">
+      <button class="lawan-btn" type="button" onclick="selectOpponent('komputer')" aria-label="Lawan Komputer">
         <img src="assets/manusia vs komputer.png" alt="Manusia vs Komputer"/>
       </button>
-      <button class="lawan-btn" onclick="selectOpponent('player')" aria-label="Lawan Pemain">
+      <button class="lawan-btn" type="button" onclick="selectOpponent('player')" aria-label="Lawan Pemain">
         <img src="assets/manusia vs manusia.png" alt="Manusia vs Manusia"/>
       </button>
     </div>
@@ -97,7 +101,9 @@
   <!-- ===== Menu Pilih Pemain ===== -->
   <div id="menuPemain" class="screen" data-prev="menuLawan">
     <div class="nav-buttons">
-      <button onclick="goBack(this)" aria-label="Kembali"><img src="assets/back.png" alt="Kembali" /></button>
+      <button type="button" onclick="goBack(this)" aria-label="Kembali">
+        <img src="assets/back.png" alt="Kembali" />
+      </button>
     </div>
 
     <h2>
@@ -113,7 +119,7 @@
     </div>
 
     <!-- Tombol Mulai (ikon) -->
-    <button class="start-btn" onclick="startGame()" aria-label="Mulai Game">
+    <button class="start-btn" type="button" onclick="startGame()" aria-label="Mulai Game">
       <img src="assets/MULAI GAME.png" alt="Ikon Mulai Game" class="start-icon" />
     </button>
   </div>
@@ -133,7 +139,7 @@
       <div class="dice-view">
         <img id="diceIcon" src="assets/d1.png" alt="Ikon dadu" />
       </div>
-      <button id="rollDiceBtn">Lempar Dadu</button>
+      <button id="rollDiceBtn" type="button">Lempar Dadu</button>
       <p id="diceResult"></p>
     </aside>
   </div>
@@ -145,29 +151,28 @@
   </div>
 
   <!-- ===== Hasil Permainan ===== -->
-<div id="resultScreen" class="screen" data-prev="gameBoard">
-  <div class="result-wrapper">
-    <h2 style="color:#fff;margin:0;">Hasil Permainan</h2>
+  <div id="resultScreen" class="screen" data-prev="gameBoard">
+    <div class="result-wrapper">
+      <h2 style="color:#fff;margin:0;">Hasil Permainan</h2>
 
-    <table class="result-table" id="resultTable">
-      <thead>
-        <tr>
-          <th>Pemain</th>
-          <th>Benar</th>
-          <th>Salah</th>
-          <th>Poin</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
+      <table class="result-table" id="resultTable">
+        <thead>
+          <tr>
+            <th>Pemain</th>
+            <th>Benar</th>
+            <th>Salah</th>
+            <th>Poin</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
 
-    <div class="result-actions">
-      <button onclick="showScreen('menuAwal')">Home</button>
-      <button onclick="startGame()">Main Lagi</button>
+      <div class="result-actions">
+        <button id="resultHomeBtn" type="button" onclick="showScreen('menuAwal')">Home</button>
+        <button id="resultReplayBtn" type="button" onclick="startGame()">Main Lagi</button>
+      </div>
     </div>
   </div>
-</div>
-
 
   <!-- ===== Audio Elements ===== -->
   <audio id="bgm"     src="assets/audio/latarbelakang.mp3" preload="auto" loop></audio>
@@ -191,7 +196,7 @@
   <!-- TERAKHIR: logika utama -->
   <script src="./script.js?v=16" defer></script>
 
-  <!-- (opsional) kontrol musik inline ringan agar ikon langsung sinkron saat halaman dibuka -->
+  <!-- (opsional) kontrol musik inline ringan agar ikon langsung sinkron saat halaman dibuka) -->
   <script>
     (function setupBgmControls(){
       const bgm        = document.getElementById('bgm');
@@ -238,7 +243,7 @@
       setIcon();
     })();
   </script>
+
+  <noscript>Aktifkan JavaScript untuk memainkan game ini.</noscript>
 </body>
 </html>
-
-
