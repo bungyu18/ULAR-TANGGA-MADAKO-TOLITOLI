@@ -28,7 +28,7 @@ let playerStats = {}; // { [idx]: {correct:0, wrong:0, points:0} }
 const jumps = {
   // Tangga (naik)
   5: 11,
-  21: 37,
+  27: 37,
   26: 55,
   31: 46,
   51: 63,
@@ -606,3 +606,4 @@ window.goBack = goBack;
 window.showScreen = showScreen;
 // (opsional) alias, kalau di tempat lain kamu pakai goTo('menuAwal')
 window.goTo = showScreen;
+
