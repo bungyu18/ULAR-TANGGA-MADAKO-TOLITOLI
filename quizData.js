@@ -45,115 +45,115 @@
 
   // --- DATA SOAL ---
   var rawBank = [
-    {
+   {
       id: 1,
-      question: "Magnet memiliki dua kutub, yaitu …",
+      question: "Benda yang dapat ditarik magnet disebut…",
       options: [
-        "A. Kutub kanan dan kiri",
-        "B. Kutub utara dan selatan",
-        "C. Kutub atas dan bawah",
-        "D. Kutub depan dan belakang"
+        "A. Nonmagnetik",
+        "B. Magnetik",
+        "C. Plastik",
+        "D. Karet"
       ],
-      answer: "B. Kutub utara dan selatan"
+      answer: "B. Magnetik"
     },
     {
       id: 2,
-      question: "Jika dua kutub magnet yang sama didekatkan, maka magnet akan …",
+      question: "Contoh benda yang bisa ditarik magnet adalah…",
       options: [
-        "A. Saling menarik",
-        "B. Saling menolak",
-        "C. Saling menempel",
-        "D. Diam saja"
+        "A. Kertas",
+        "B. Pensil kayu",
+        "C. Paku besi",
+        "D. Penghapus"
       ],
-      answer: "B. Saling menolak"
+      answer: "C. Paku besi"
     },
     {
       id: 3,
-      question: "Magnet dapat menarik benda yang terbuat dari …",
+      question: "Mengapa jarum kompas bisa menunjuk arah utara?",
       options: [
-        "A. Kayu",
-        "B. Kertas",
-        "C. Besi",
-        "D. Plastik"
+        "A. Karena jarumnya ringan",
+        "B. Karena jarumnya berputar sendiri",
+        "C. Karena magnet bumi menarik jarum kompas",
+        "D. Karena ada baterainya"
       ],
-      answer: "C. Besi"
+      answer: "C. Karena magnet bumi menarik jarum kompas"
     },
     {
       id: 4,
-      question: "Gaya magnet paling kuat terdapat di bagian …",
+      question: "Pintu lemari es bisa menutup rapat karena…",
       options: [
-        "A. Tengah magnet",
-        "B. Ujung magnet",
-        "C. Sisi magnet",
-        "D. Belakang magnet"
+        "A. Ada kunci rahasia",
+        "B. Ada magnet di bagian pinggir pintunya",
+        "C. Udara di dalamnya dingin",
+        "D. Bahannya tebal"
       ],
-      answer: "B. Ujung magnet"
+      answer: "B. Ada magnet di bagian pinggir pintunya"
     },
     {
       id: 5,
-      question: "Jika magnet dipotong menjadi dua bagian, maka …",
+      question: "Jika kamu ingin mengambil benda logam kecil yang jatuh ke celah sempit, alat yang cocok dipakai adalah…",
       options: [
-        "A. Salah satu bagian tidak memiliki kutub",
-        "B. Setiap bagian tetap memiliki kutub utara dan selatan",
-        "C. Magnet menjadi hilang kekuatannya",
-        "D. Hanya satu bagian yang menjadi magnet"
+        "A. Senter",
+        "B. Magnet",
+        "C. Penggaris",
+        "D. Karet gelang"
       ],
-      answer: "B. Setiap bagian tetap memiliki kutub utara dan selatan"
+      answer: "B. Magnet"
     },
     {
       id: 6,
-      question: "Contoh benda yang tidak dapat ditarik magnet adalah …",
+      question: "Menggunakan magnet pada tempat pensil untuk menempelkan penjepit kertas merupakan contoh…",
       options: [
-        "A. Paku",
-        "B. Jarum",
-        "C. Sendok besi",
-        "D. Penghapus"
+        "A. Permainan",
+        "B. Pemanfaatan gaya magnet",
+        "C. Percobaan listrik",
+        "D. Penggunaan gaya otot"
       ],
-      answer: "D. Penghapus"
+      answer: "B. Pemanfaatan gaya magnet"
     },
     {
       id: 7,
-      question: "Magnet bisa kehilangan kekuatannya jika …",
+      question: "Mana yang paling mungkin tidak bisa ditarik oleh magnet?",
       options: [
-        "A. Didinginkan",
-        "B. Dibiarkan di tempat sejuk",
-        "C. Dipukul atau dipanaskan",
-        "D. Ditarik benda logam"
+        "A. Ujung gunting",
+        "B. Peniti besi",
+        "C. Tutup botol logam aluminium",
+        "D. Paku"
       ],
-      answer: "C. Dipukul atau dipanaskan"
+      answer: "C. Tutup botol logam aluminium"
     },
     {
       id: 8,
-      question: "Magnet yang dapat dibuat dari besi dengan cara dialiri arus listrik disebut …",
+      question: "Kenapa magnet pada pintu kulkas harus cukup kuat?",
       options: [
-        "A. Magnet batang",
-        "B. Magnet permanen",
-        "C. Elektromagnet",
-        "D. Magnet alam"
+        "A. Biar warnanya bagus",
+        "B. Supaya makanan tetap dingin karena pintunya menutup rapat",
+        "C. Agar kulkas tidak berbunyi",
+        "D. Karena magnet bikin listrik lebih irit"
       ],
-      answer: "C. Elektromagnet"
+      answer: "B. Supaya makanan tetap dingin karena pintunya menutup rapat"
     },
     {
       id: 9,
-      question: "Kutub magnet yang berlawanan akan …",
+      question: "Kamu diminta memilih alat yang paling aman untuk menempelkan catatan kecil di kulkas. Pilihan terbaik adalah…",
       options: [
-        "A. Menolak",
-        "B. Menarik",
-        "C. Hilang",
-        "D. Diam"
+        "A. Lem kertas",
+        "B. Paku",
+        "C. Magnet tempel",
+        "D. Staples"
       ],
-      answer: "B. Menarik"
+      answer: "C. Magnet tempel"
     },
     {
       id: 10,
-      question: "Jika magnet digantung bebas, ujung magnet yang menunjuk ke arah utara bumi adalah …",
+      question: "Menurutmu, kenapa magnet sering dipakai di banyak alat rumah tangga?",
       options: [
-        "A. Kutub selatan magnet",
-        "B. Kutub utara magnet",
-        "C. Tengah magnet",
-        "D. Kutub timur magnet"
+        "A. Karena murah dan warna-warni",
+        "B. Karena bisa menarik logam tanpa disentuh",
+        "C. Karena bisa berubah jadi listrik",
+        "D. Karena bisa menghasilkan suara"
       ],
-      answer: "B. Kutub utara magnet"
+      answer: "B. Karena bisa menarik logam tanpa disentuh"
     }
   ];
 
@@ -216,3 +216,4 @@
     console.log("[quizData] loaded:", window.quizBank.length, "soal");
   }
 })();
+
