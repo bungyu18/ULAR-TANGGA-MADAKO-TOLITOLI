@@ -1,5 +1,5 @@
 // ===============================
-// script.js (versi lengkap terbaru)
+// script.js (versi lengkap terbaru, fixed Home button)
 // ===============================
 
 "use strict";
@@ -601,3 +601,8 @@ window.selectMode = selectMode;
 window.selectOpponent = selectOpponent;
 window.startGame = startGame;
 window.goBack = goBack;
+
+// ✅ FIX: ekspor showScreen agar tombol Home di HTML bisa memanggilnya
+window.showScreen = showScreen;
+// (opsional) alias, kalau di tempat lain kamu pakai goTo('menuAwal')
+window.goTo = showScreen;
