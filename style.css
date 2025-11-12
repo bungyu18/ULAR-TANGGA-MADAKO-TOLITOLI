@@ -467,9 +467,19 @@ h2 { margin: 0; padding: 0; }
 
 /* ====== LAYAR HASIL (PAKSA RATA TENGAH) ====== */
 #resultScreen.screen.active {
-  position: fixed;          /* tutupi seluruh layar */
+  position: fixed;
   inset: 0;
-  z-index: 10000;
+  z-index: 99999; /* lebih tinggi dari semua elemen lain */
+  display: grid !important;
+  place-items: center;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 24px;
+  pointer-events: auto; /* pastikan bisa diklik */
+}
+
+#resultScreen * {
+  pointer-events: auto; /* semua anak elemen bisa diklik */
+}
 
   /* center super kuat */
   display: grid !important; /* override .screen yang pakai flex */
@@ -537,3 +547,5 @@ h2 { margin: 0; padding: 0; }
     padding-top: 16px;
   }
 }
+
+
