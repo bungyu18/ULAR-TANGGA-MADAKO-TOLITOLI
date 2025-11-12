@@ -145,8 +145,9 @@
   </div>
 
   <!-- ===== Hasil Permainan ===== -->
-  <div id="resultScreen" class="screen" data-prev="gameBoard">
-    <h2 style="color:#fff;margin-bottom:12px;">Hasil Permainan</h2>
+<div id="resultScreen" class="screen" data-prev="gameBoard">
+  <div class="result-wrapper">
+    <h2 style="color:#fff;margin:0;">Hasil Permainan</h2>
 
     <table class="result-table" id="resultTable">
       <thead>
@@ -161,10 +162,12 @@
     </table>
 
     <div class="result-actions">
-      <button onclick="showScreen('menuAwal')">Home</button>
+      <button onclick="goTo('menuAwal')">Home</button>
       <button onclick="startGame()">Main Lagi</button>
     </div>
   </div>
+</div>
+
 
   <!-- ===== Audio Elements ===== -->
   <audio id="bgm"     src="assets/audio/latarbelakang.mp3" preload="auto" loop></audio>
@@ -237,3 +240,4 @@
   </script>
 </body>
 </html>
+
