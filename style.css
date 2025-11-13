@@ -548,4 +548,25 @@ h2 { margin: 0; padding: 0; }
   }
 }
 
+/* ====== Label Nama Pemain di Atas Pion ====== */
+.player-label {
+  position: absolute;
+  bottom: 45px; /* posisi di atas pion */
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 12px;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+  white-space: nowrap;
+  pointer-events: none; /* supaya tidak ganggu klik */
+}
+
+.token-wrap {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+}
+
 
