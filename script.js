@@ -245,19 +245,23 @@ function renderBoard() {
 // === Token (pion) ===
 function ensureTokens() {
   const board = document.getElementById("board");
+
   for (let i = 1; i <= numPlayers; i++) {
     let wrap = document.querySelector(`.token-wrap[data-player="${i}"]`);
+
+    // Jika belum ada wrap, buat baru
     if (!wrap) {
       wrap = document.createElement("div");
       wrap.className = "token-wrap";
       wrap.dataset.player = String(i);
 
-      // Tambahkan label nama di atas pion
+      // === LABEL NAMA (muncul di atas pion) ===
       const label = document.createElement("div");
       label.className = "player-label";
       label.textContent = playerNames[i];
       wrap.appendChild(label);
 
+      // === GAMBAR PION ===
       const img = document.createElement("img");
       img.className = "token-img";
       img.src = playerAvatars[i];
@@ -265,13 +269,18 @@ function ensureTokens() {
       wrap.appendChild(img);
 
       board.appendChild(wrap);
+
     } else {
-      // Update nama jika sudah ada wrap (misal restart)
+      // Jika wrap sudah ada → update labelnya saja
       const label = wrap.querySelector(".player-label");
       if (label) label.textContent = playerNames[i];
+
+      const img = wrap.querySelector(".token-img");
+      if (img) img.src = playerAvatars[i];
     }
   }
 }
+
 
 
 function getCellXY(pos, offsetIndex = 0) {
@@ -618,5 +627,6 @@ window.goBack = goBack;
 window.showScreen = showScreen;
 // (opsional) alias, kalau di tempat lain kamu pakai goTo('menuAwal')
 window.goTo = showScreen;
+
 
 
