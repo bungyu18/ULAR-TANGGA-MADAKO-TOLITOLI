@@ -549,24 +549,31 @@ h2 { margin: 0; padding: 0; }
 }
 
 /* ====== Label Nama Pemain di Atas Pion ====== */
+/* ====== Label Nama Pemain di Atas Pion (dengan kotak putih) ====== */
 .player-label {
   position: absolute;
-  bottom: 45px; /* posisi di atas pion */
+  bottom: 45px;              /* posisi di atas pion, bisa diubah */
   left: 50%;
   transform: translateX(-50%);
-  font-size: 12px;
-  font-weight: bold;
-  color: #fff;
-  text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+
+  background: rgba(255, 255, 255, 0.85); /* putih, tidak terlalu terang, tidak terlalu transparan */
+  padding: 2px 6px;          /* ruang dalam kotak */
+  border-radius: 6px;        /* sudut membulat */
+  border: 1px solid rgba(0,0,0,0.25); /* outline tipis agar terlihat rapi */
+
+  font-size: 12px;           /* ukuran tulisan → tinggal ubah */
+  font-weight: 600;
+  color: #000;               /* warna teks */
   white-space: nowrap;
-  pointer-events: none; /* supaya tidak ganggu klik */
+  text-align: center;
+
+  pointer-events: none;      /* supaya tidak mengganggu klik pion */
 }
 
+/* Kontainer pion */
 .token-wrap {
   position: absolute;
   width: 40px;
   height: 40px;
   text-align: center;
 }
-
-
