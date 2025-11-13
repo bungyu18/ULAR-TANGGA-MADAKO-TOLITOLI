@@ -53,9 +53,9 @@
     "B. Pembangkit listrik",
     "C. Kertas",
     "D. Pasir"
-  ],
+  ]
   answer: "B. Pembangkit listrik"
-},
+}
 {
   id: 2,
   question: "Panel surya mendapatkan energi dari…",
@@ -64,9 +64,9 @@
     "B. Lampu",
     "C. Matahari",
     "D. Angin"
-  ],
+  ]
   answer: "C. Matahari"
-},
+}
 {
   id: 3,
   question: "PLTA (Pembangkit Listrik Tenaga Air) menggunakan…",
@@ -75,9 +75,9 @@
     "B. Air",
     "C. Tanah",
     "D. Benda logam"
-  ],
+  ]
   answer: "B. Air"
-},
+}
 {
   id: 4,
   question: "Energi listrik disalurkan ke rumah lewat…",
@@ -86,9 +86,9 @@
     "B. Pipa air",
     "C. Kabel listrik",
     "D. Selang"
-  ],
+  ]
   answer: "C. Kabel listrik"
-},
+}
 {
   id: 5,
   question: "Kipas angin bekerja karena listrik berubah menjadi energi…",
@@ -97,9 +97,9 @@
     "B. Cahaya",
     "C. Suara",
     "D. Panas"
-  ],
+  ]
   answer: "A. Gerak"
-},
+}
 {
   id: 6,
   question: "Lampu menyala karena energi listrik berubah menjadi…",
@@ -108,9 +108,9 @@
     "B. Cahaya",
     "C. Es",
     "D. Suara"
-  ],
+  ]
   answer: "B. Cahaya"
-},
+}
 {
   id: 7,
   question: "Jika kabel listrik rusak, maka…",
@@ -119,9 +119,9 @@
     "B. Listrik bisa mati",
     "C. Kipas angin jadi besar",
     "D. TV menyala terus"
-  ],
+  ]
   answer: "B. Listrik bisa mati"
-},
+}
 {
   id: 8,
   question: "Menghemat listrik di rumah itu penting supaya…",
@@ -130,9 +130,9 @@
     "B. Orang lain tidak bisa pakai",
     "C. Tagihan listrik tidak mahal",
     "D. Lampu jadi redup"
-  ],
+  ]
   answer: "C. Tagihan listrik tidak mahal"
-},
+}
 {
   id: 9,
   question: "Contoh alat yang memakai listrik adalah…",
@@ -141,9 +141,9 @@
     "B. Pensil",
     "C. Televisi",
     "D. Sepatu"
-  ],
+  ]
   answer: "C. Televisi"
-},
+}
 {
   id: 10,
   question: "Kita harus mematikan lampu saat tidak dipakai agar…",
@@ -152,10 +152,10 @@
     "B. Listrik tidak boros",
     "C. Lampu cepat rusak",
     "D. Warna lampu berubah"
-  ],
+  ]
   answer: "B. Listrik tidak boros"
   }
-  ];
+  ]
 
   // Normalisasi (pastikan opsi & jawaban konsisten berlabel)
   window.quizBank = rawBank.map(function (q, idx) {
@@ -216,5 +216,6 @@
     console.log("[quizData] loaded:", window.quizBank.length, "soal");
   }
 })();
+
 
 
