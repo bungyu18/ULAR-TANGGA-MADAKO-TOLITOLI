@@ -252,16 +252,28 @@ function ensureTokens() {
       wrap.className = "token-wrap";
       wrap.dataset.player = String(i);
 
+      // Tambahkan label nama di atas pion
+      const label = document.createElement("div");
+      label.className = "player-label";
+      label.textContent = playerNames[i];
+      wrap.appendChild(label);
+
       const img = document.createElement("img");
       img.className = "token-img";
       img.src = playerAvatars[i];
       img.alt = playerNames[i];
-
       wrap.appendChild(img);
+
       board.appendChild(wrap);
+    } else {
+      // Update nama jika sudah ada wrap (misal restart)
+      const label = wrap.querySelector(".player-label");
+      if (label) label.textContent = playerNames[i];
     }
   }
 }
+
+
 function getCellXY(pos, offsetIndex = 0) {
   const cell = document.getElementById(`cell-${pos}`);
   const board = document.getElementById("board");
@@ -606,4 +618,5 @@ window.goBack = goBack;
 window.showScreen = showScreen;
 // (opsional) alias, kalau di tempat lain kamu pakai goTo('menuAwal')
 window.goTo = showScreen;
+
 
