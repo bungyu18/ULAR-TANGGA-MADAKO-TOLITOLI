@@ -45,116 +45,116 @@
 
   // --- DATA SOAL ---
   var rawBank = [
-   {
-      id: 1,
-      question: "Benda yang dapat ditarik magnet disebut…",
-      options: [
-        "A. Nonmagnetik",
-        "B. Magnetik",
-        "C. Plastik",
-        "D. Karet"
-      ],
-      answer: "B. Magnetik"
-    },
-    {
-      id: 2,
-      question: "Contoh benda yang bisa ditarik magnet adalah…",
-      options: [
-        "A. Kertas",
-        "B. Pensil kayu",
-        "C. Paku besi",
-        "D. Penghapus"
-      ],
-      answer: "C. Paku besi"
-    },
-    {
-      id: 3,
-      question: "Mengapa jarum kompas bisa menunjuk arah utara?",
-      options: [
-        "A. Karena jarumnya ringan",
-        "B. Karena jarumnya berputar sendiri",
-        "C. Karena magnet bumi menarik jarum kompas",
-        "D. Karena ada baterainya"
-      ],
-      answer: "C. Karena magnet bumi menarik jarum kompas"
-    },
-    {
-      id: 4,
-      question: "Pintu lemari es bisa menutup rapat karena…",
-      options: [
-        "A. Ada kunci rahasia",
-        "B. Ada magnet di bagian pinggir pintunya",
-        "C. Udara di dalamnya dingin",
-        "D. Bahannya tebal"
-      ],
-      answer: "B. Ada magnet di bagian pinggir pintunya"
-    },
-    {
-      id: 5,
-      question: "Jika kamu ingin mengambil benda logam kecil yang jatuh ke celah sempit, alat yang cocok dipakai adalah…",
-      options: [
-        "A. Senter",
-        "B. Magnet",
-        "C. Penggaris",
-        "D. Karet gelang"
-      ],
-      answer: "B. Magnet"
-    },
-    {
-      id: 6,
-      question: "Menggunakan magnet pada tempat pensil untuk menempelkan penjepit kertas merupakan contoh…",
-      options: [
-        "A. Permainan",
-        "B. Pemanfaatan gaya magnet",
-        "C. Percobaan listrik",
-        "D. Penggunaan gaya otot"
-      ],
-      answer: "B. Pemanfaatan gaya magnet"
-    },
-    {
-      id: 7,
-      question: "Mana yang paling mungkin tidak bisa ditarik oleh magnet?",
-      options: [
-        "A. Ujung gunting",
-        "B. Peniti besi",
-        "C. Tutup botol logam aluminium",
-        "D. Paku"
-      ],
-      answer: "C. Tutup botol logam aluminium"
-    },
-    {
-      id: 8,
-      question: "Kenapa magnet pada pintu kulkas harus cukup kuat?",
-      options: [
-        "A. Biar warnanya bagus",
-        "B. Supaya makanan tetap dingin karena pintunya menutup rapat",
-        "C. Agar kulkas tidak berbunyi",
-        "D. Karena magnet bikin listrik lebih irit"
-      ],
-      answer: "B. Supaya makanan tetap dingin karena pintunya menutup rapat"
-    },
-    {
-      id: 9,
-      question: "Kamu diminta memilih alat yang paling aman untuk menempelkan catatan kecil di kulkas. Pilihan terbaik adalah…",
-      options: [
-        "A. Lem kertas",
-        "B. Paku",
-        "C. Magnet tempel",
-        "D. Staples"
-      ],
-      answer: "C. Magnet tempel"
-    },
-    {
-      id: 10,
-      question: "Menurutmu, kenapa magnet sering dipakai di banyak alat rumah tangga?",
-      options: [
-        "A. Karena murah dan warna-warni",
-        "B. Karena bisa menarik logam tanpa disentuh",
-        "C. Karena bisa berubah jadi listrik",
-        "D. Karena bisa menghasilkan suara"
-      ],
-      answer: "B. Karena bisa menarik logam tanpa disentuh"
-    }
+  {
+  id: 1,
+  question: "Energi listrik bisa kita dapatkan dari…",
+  options: [
+    "A. Batu",
+    "B. Pembangkit listrik",
+    "C. Kertas",
+    "D. Pasir"
+  ],
+  answer: "B. Pembangkit listrik"
+},
+{
+  id: 2,
+  question: "Panel surya mendapatkan energi dari…",
+  options: [
+    "A. Bulan",
+    "B. Lampu",
+    "C. Matahari",
+    "D. Angin"
+  ],
+  answer: "C. Matahari"
+},
+{
+  id: 3,
+  question: "PLTA (Pembangkit Listrik Tenaga Air) menggunakan…",
+  options: [
+    "A. Udara",
+    "B. Air",
+    "C. Tanah",
+    "D. Benda logam"
+  ],
+  answer: "B. Air"
+},
+{
+  id: 4,
+  question: "Energi listrik disalurkan ke rumah lewat…",
+  options: [
+    "A. Jalan raya",
+    "B. Pipa air",
+    "C. Kabel listrik",
+    "D. Selang"
+  ],
+  answer: "C. Kabel listrik"
+},
+{
+  id: 5,
+  question: "Kipas angin bekerja karena listrik berubah menjadi energi…",
+  options: [
+    "A. Gerak",
+    "B. Cahaya",
+    "C. Suara",
+    "D. Panas"
+  ],
+  answer: "A. Gerak"
+},
+{
+  id: 6,
+  question: "Lampu menyala karena energi listrik berubah menjadi…",
+  options: [
+    "A. Angin",
+    "B. Cahaya",
+    "C. Es",
+    "D. Suara"
+  ],
+  answer: "B. Cahaya"
+},
+{
+  id: 7,
+  question: "Jika kabel listrik rusak, maka…",
+  options: [
+    "A. Lampu bisa tambah terang",
+    "B. Listrik bisa mati",
+    "C. Kipas angin jadi besar",
+    "D. TV menyala terus"
+  ],
+  answer: "B. Listrik bisa mati"
+},
+{
+  id: 8,
+  question: "Menghemat listrik di rumah itu penting supaya…",
+  options: [
+    "A. Listrik cepat habis",
+    "B. Orang lain tidak bisa pakai",
+    "C. Tagihan listrik tidak mahal",
+    "D. Lampu jadi redup"
+  ],
+  answer: "C. Tagihan listrik tidak mahal"
+},
+{
+  id: 9,
+  question: "Contoh alat yang memakai listrik adalah…",
+  options: [
+    "A. Buku",
+    "B. Pensil",
+    "C. Televisi",
+    "D. Sepatu"
+  ],
+  answer: "C. Televisi"
+},
+{
+  id: 10,
+  question: "Kita harus mematikan lampu saat tidak dipakai agar…",
+  options: [
+    "A. Rumah makin panas",
+    "B. Listrik tidak boros",
+    "C. Lampu cepat rusak",
+    "D. Warna lampu berubah"
+  ],
+  answer: "B. Listrik tidak boros"
+  }
   ];
 
   // Normalisasi (pastikan opsi & jawaban konsisten berlabel)
@@ -216,4 +216,5 @@
     console.log("[quizData] loaded:", window.quizBank.length, "soal");
   }
 })();
+
 
